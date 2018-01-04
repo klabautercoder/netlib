@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <#include "init.html" />
+</head>
+<body id="top">
+
+<#include "header.html" />
+
+<div id="main">
+    <#list artikel as einArtikel>
+    <section>
+            <article class="12u">
+                <#if einArtikel.title??>
+                    <H2>${einArtikel.title}</H2>
+                </#if>
+
+                <p>
+                    zuletzt bearbeitet am
+                    <#if einArtikel.editedAt??>
+                        ${einArtikel.editedAt.dayOfMonth}.${einArtikel.editedAt.monthValue}.${einArtikel.editedAt.year?replace(",","")}
+                        um
+                        ${einArtikel.editedAt.hour}:${einArtikel.editedAt.minute} Uhr
+                    <#else>
+                        unbekannt
+                    </#if>
+                    <#if einArtikel.tags??>
+                        , Getaggt unter ${einArtikel.tags}
+                    </#if>
+                </p>
+
+                <b>${(einArtikel.summary)!}</b>
+                <p>${einArtikel.text}</p>
+
+                <a href="/${einArtikel.id}">...weiterlesen</a>
+            </article>
+    </section>
+    </#list>
+    <section style="text-align:center">
+            <#list 1..maxPages as page>
+                <a href="?page=${page}">${page}</a> -
+            </#list>
+    </section>
+    <section>
+        <footer>
+        <h3>Fortune</h3>
+        ${fortune}
+        <br /><br />
+
+        crafted by <a href="http://html5up.net">HTML5 UP</a>.<br />
+        </footer>
+    </section>
+</div>
+
+<script>
+    if ( navigator.platform.indexOf('Win') != -1 ) {
+        window.document.getElementById("wrapper").setAttribute("class", "windows");
+    } else if ( navigator.platform.indexOf('Mac') != -1 ) {
+        window.document.getElementById("wrapper").setAttribute("class", "mac");
+    }
+</script>
+
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.poptrox.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+
+</body>
+</html>

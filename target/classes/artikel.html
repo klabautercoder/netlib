@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <#include "init.html" />
+</head>
+<body id="top">
+
+<#include "header.html" />
+
+<div id="main">
+
+    <section id="one">
+        <H3>${artikel.title}</H3>
+
+        <#if artikel.released>
+           zuletzt bearbeitet am
+            <#if artikel.editedAt??>
+                ${artikel.editedAt.dayOfMonth}.${artikel.editedAt.monthValue}.${artikel.editedAt.year?replace(",","")}
+                um
+                ${artikel.editedAt.hour}:${artikel.editedAt.minute} Uhr
+            <#else>
+                unbekannt.
+            </#if>
+        </#if>
+
+        <#if artikel.tags != "">
+            Getaggt unter ${artikel.tags}
+        </#if>
+        <br><br>
+        <B>
+            <#if artikel.released>
+                ${(artikel.summary)!}
+            </#if>
+        </B>
+        <br><br>
+        ${artikel.text}
+
+        <br><br>
+        <p class="text-right">
+            <a href="/  ">Zurück zur Hauptseite</a>
+        </p>
+
+    <form action="../comment" method="post">
+        <input type="hidden" name="artId" value="${artikel.id}"/>
+            <label for="commentTitel">Kommentarüberschrift</label>
+            <input type="text" class="form-control" size="50" name="commentTitel" id="commentTitel"
+                   placeholder="Titel (optional)"/>
+            <label for="commentText">Kommentar</label>
+            <textarea name="commentText" cols="40" rows="10" class="form-control" id="commentText"
+                      placeholder="Kommentar"></textarea>
+        <input type="submit" value="Kommentar speichern"/>
+    </form>
+
+    <#list kommentare as einKommentar>
+        <h4>${(einKommentar.title)!}</h4>
+        ${einKommentar.text}
+        <hr size="0"/>
+    </#list>
+</section>
+</div>
+</body>
+</html>
