@@ -13,13 +13,15 @@ public class NetLibException extends Exception {
     @Getter
     private int errorCode = -1;
 
-    public NetLibException() {}
+    public NetLibException() {
+    }
 
     public NetLibException(String exp) {
         super(exp);
     }
 
-    public  String toString() {
+    @Override
+    public String toString() {
         StringBuilder error = new StringBuilder();
 
         error.append("Error Calling: ").append(url).append(". <br/>\n");

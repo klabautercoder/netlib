@@ -9,11 +9,9 @@
     <version>2.0</version>
 
     <name>netlib</name>
-    <description>Darstellungsservice für Boards</description>
+    <description>REST Network Interface</description>
 
     <properties>
-        <jooby.version>1.2.0</jooby.version>
-
         <!-- Startup class -->
         <application.class>de.klabauter.App</application.class>
     </properties>
@@ -39,7 +37,6 @@
             <artifactId>unirest-java</artifactId>
             <version>1.4.9</version>
         </dependency>
-
 
         <!-- Tests -->
         <dependency>
@@ -77,6 +74,8 @@
                 <configuration>
                     <debug>false</debug>
                     <optimize>true</optimize>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

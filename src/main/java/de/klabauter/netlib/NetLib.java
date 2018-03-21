@@ -1,58 +1,97 @@
 package de.klabauter.netlib;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSyntaxException;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Basisklasse für die REST Kommunikation mit der Microservice
+ * Landschaft. Aktuell läuft die Kommunikation nur innerhalb eines Stacks.
+ *
+ * @param <R> - Objekttyp, mit dem die Schnittstelle in ihrer Implementierung arbeitet
+ */
 @Slf4j
+public abstract class NetLib<R> {
 
-public abstract class NetLib<RESPONSE extends Object> {
-    private String apiGateway;
-    private String apiVersion;
+    private String apiGateway;  // Config
+    private String apiVersion;  // Config
+
     private int internalPort = 8080;
 
     protected String realApiUrl;
 
-    private Gson gson = new Gson();
+    // Wie oft haben wir gegen den Microservice getestet
+    private int retryCount = 0;
+
+    private Gson gson;
 
     public NetLib(
             String apiGateway,
             String apiVersion
     ) {
+
         this.apiGateway = apiGateway;
         this.apiVersion = apiVersion;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        gson = new GsonBuilder().registerTypeAdapter(
+                LocalDateTime.class, (JsonDeserializer<LocalDateTime>)
+                        (json, type, jsonDeserializationContext) -> {
+                            Instant instant = null;
+                            try {
+                                String date = json.getAsJsonPrimitive().getAsString();
+                                instant = sdf.parse(json.getAsJsonPrimitive().getAsString()).toInstant();
+                                ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Europe/Berlin"));
+                                return zonedDateTime.toLocalDateTime();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+
+                        }).create();
+
         setUrlToMicroservice();
     }
 
+    /**
+     * Die URL entscheiden.
+     */
     private void setUrlToMicroservice() {
         if (isSwarmServiceUrlAccessable()) {
             realApiUrl = "http://" + serviceName() + "-" + apiVersion + ":" + internalPort + "/";
         } else {
             realApiUrl = apiGateway + serviceName() + "/";
         }
-
-        log.info("Accessing {} via {}", serviceName(), realApiUrl);
+        retryCount = 0; // Neu geschaut resettet die Retrys im Allgemeinen.
     }
 
     /**
      * Prüft ob die Microservice Swarm Urls greifen.
      * Wenn nicht wird auf die ApiGW Url zurückgegriffen.
+     *
      * @return
      */
     private boolean isSwarmServiceUrlAccessable() {
-        log.info("Checking Microservice : {}-{}:{}", serviceName(), apiVersion, internalPort);
-        try (Socket s = new Socket(serviceName() + "-" + apiVersion, internalPort)) {
+        try (Socket ignored = new Socket(serviceName() + "-" + apiVersion, internalPort)) {
             return true;
         } catch (IOException ex) {
             /* ignore */
@@ -64,49 +103,94 @@ public abstract class NetLib<RESPONSE extends Object> {
 
     protected abstract Class responseClazz();
 
-    public RESPONSE getData(String url) throws Exception {
+    /**
+     * Einfaches holen eines einzigen Datenobjektes
+     *
+     * @param url - Teilurl zum Element
+     * @return Datenobjekt oder null
+     * @throws UnirestException - Microservice falsch
+     * @throws NetLibException  - Server falsch/weg
+     */
+    public R getData(String url)
+            throws UnirestException, NetLibException {
         url = realApiUrl + url;
-        log.debug("Requesting {}", url);
+
         HttpResponse<String> data = Unirest.get(url).asString();
 
-        if (data.getStatus() != 200) {
+        // @TODO: Die Logik nochmal nachprüfen
+        if ((data.getBody() == null || data.getBody().isEmpty())
+                || (data.getStatus() != 200)) {
             NetLibException exception = new NetLibException();
             exception.setUrl(url);
             exception.setErrorCode(data.getStatus());
-
             setUrlToMicroservice(); // Erneut Verbindung prüfen
             throw exception;
         }
 
-        if (data.getBody() == null || data.getBody().isEmpty()) {
-            throw new Exception("Anfrage " + url + " gab einen leeren Response.Status vom Microservice : " + data.getStatus());
-        }
-        return (RESPONSE) Unirest.get(url).asObject(responseClazz()).getBody();
+        try {
 
+            String contents = data.getBody();
+            R rdata = (R) gson.fromJson(contents, responseClazz());
+            return rdata;
+        } catch (JsonSyntaxException exp) {
+            // Microservice hatte Probleme. Wir versuchen es nochmal?
+            retryCount++;
+            if (retryCount < 4)
+                getDataAsList(url); // Nochmal versuchen
+        } catch (Exception exp) {
+            log.error(exp.getMessage(), exp);
+            setUrlToMicroservice();
+        }
+
+        retryCount = 0; // Resetten damit der nächste Call nicht Probleme bekommt;
+        return null;
     }
 
-    public List<RESPONSE> getDataAsList(String url) throws UnirestException, NetLibException {
+    /**
+     * @param url - URL Aufruf ohne http://<SERVER />
+     * @return
+     * @throws UnirestException - Request Probleme
+     * @throws NetLibException  - Alle andere Probleme
+     */
+    public List<R> getDataAsList(String url)
+            throws UnirestException, NetLibException {
+
         url = realApiUrl + url;
 
         HttpResponse<String> str = Unirest.get(url).asString();
         try {
             Object[] array = (Object[]) java.lang.reflect.Array.newInstance(responseClazz(), 1);
-            RESPONSE[] mcArray = gson.fromJson(str.getBody(), (Type) array.getClass());
-            List<RESPONSE> ret = new LinkedList<>();
+            R[] mcArray = gson.fromJson(str.getBody(), (Type) array.getClass());
+            List<R> ret = new LinkedList<>();
             ret.addAll(Arrays.asList(mcArray));
             return ret;
+        } catch (JsonSyntaxException exp) {
+            // Microservice hatte Probleme. Wir versuchen es nochmal?
+            retryCount++;
+            if (retryCount < 4)
+                getDataAsList(url); // Nochmal versuchen
         } catch (Exception exp) {
+            // Microservice ist nicht da?
             NetLibException exp2 = new NetLibException(exp.getMessage());
             exp2.setUrl(url);
             exp2.setErrorCode(str.getStatus());
-
             setUrlToMicroservice(); // Erneut Verbindung prüfen
             throw exp2;
         }
 
+        retryCount = 0; // Resetten damit der nächste Call nicht Probleme bekommt;
+        return null;
     }
 
-    public List<Integer> getIdsFrom(String url) throws UnirestException, NetLibException {
+    /**
+     * @param url - URL Aufruf ohne http://<SERVER />
+     * @return Liste von Ids
+     * @throws UnirestException - Request Probleme
+     * @throws NetLibException  - Alle andere Probleme
+     */
+    public List<Integer> getIdsFrom(String url)
+            throws UnirestException, NetLibException {
+
         url = realApiUrl + url;
 
         HttpResponse<String> str = Unirest.get(url).asString();
@@ -116,13 +200,19 @@ public abstract class NetLib<RESPONSE extends Object> {
             List<Integer> ret = new LinkedList<>();
             ret.addAll(Arrays.asList(mcArray));
             return ret;
+        } catch (JsonSyntaxException exp) {
+            // Microservice hatte Probleme. Wir versuchen es nochmal?
+            retryCount++;
+            if (retryCount < 4)
+                getDataAsList(url); // Nochmal versuchen
         } catch (Exception exp) {
             NetLibException exp2 = new NetLibException(exp.getMessage());
             exp2.setUrl(url);
             exp2.setErrorCode(str.getStatus());
-
             setUrlToMicroservice(); // Erneut Verbindung prüfen
             throw exp2;
         }
+        retryCount = 0; // Resetten damit der nächste Call nicht Probleme bekommt;
+        return null;
     }
 }
