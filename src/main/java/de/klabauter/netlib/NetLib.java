@@ -21,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Basisklasse für die REST Kommunikation mit der Microservice
@@ -45,25 +46,27 @@ public abstract class NetLib<R> {
 
     public NetLib(
             String apiGateway,
-            String apiVersion
+            String apiVersion,
+            Optional<Integer> port
     ) {
 
         this.apiGateway = apiGateway;
         this.apiVersion = apiVersion;
+
+        if (port.isPresent())
+            this.internalPort = port.get();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         gson = new GsonBuilder().registerTypeAdapter(
                 LocalDateTime.class, (JsonDeserializer<LocalDateTime>)
                         (json, type, jsonDeserializationContext) -> {
-                            Instant instant = null;
                             try {
-                                String date = json.getAsJsonPrimitive().getAsString();
-                                instant = sdf.parse(json.getAsJsonPrimitive().getAsString()).toInstant();
+                                Instant instant = sdf.parse(json.getAsJsonPrimitive().getAsString()).toInstant();
                                 ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Europe/Berlin"));
                                 return zonedDateTime.toLocalDateTime();
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                log.error(e.getMessage(), e);
                                 return null;
                             }
 
@@ -128,10 +131,7 @@ public abstract class NetLib<R> {
         }
 
         try {
-
-            String contents = data.getBody();
-            R rdata = (R) gson.fromJson(contents, responseClazz());
-            return rdata;
+            return (R) gson.fromJson(data.getBody(), responseClazz());
         } catch (JsonSyntaxException exp) {
             // Microservice hatte Probleme. Wir versuchen es nochmal?
             retryCount++;
