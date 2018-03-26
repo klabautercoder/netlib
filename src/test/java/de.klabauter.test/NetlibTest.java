@@ -2,6 +2,8 @@ package de.klabauter.test;
 
 import com.google.gson.Gson;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import de.klabauter.netlib.NetLibException;
 import io.specto.hoverfly.junit.core.SimulationSource;
 import io.specto.hoverfly.junit.rule.HoverflyRule;
 import org.junit.ClassRule;
@@ -27,6 +29,8 @@ class NetlibTest {
     private Gson gson = new Gson();
 
 
+    private DummyObjectNetLib lib = new DummyObjectNetLib();
+
     @BeforeAll
     public static void init() {
         Unirest.setObjectMapper(new UniRestDataObjectMapper());
@@ -36,7 +40,7 @@ class NetlibTest {
     @ClassRule
     public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(
             SimulationSource.dsl(
-                service("localhost:8080")
+                service("localhost")
                     .get("/1")
                     .willReturn(success(json(new DummyObject())))
                     .post("/")
@@ -49,7 +53,10 @@ class NetlibTest {
     );
 
     @Test
-    public void contextLoads() {
+    public void contextLoads() throws NetLibException, UnirestException {
+
+
+        lib.getIdsFrom("");
         Assertions.assertTrue(1 == 1);
     }
 

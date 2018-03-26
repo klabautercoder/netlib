@@ -2,12 +2,13 @@ package de.klabauter.test;
 
 import de.klabauter.netlib.NetLib;
 
-import java.util.Optional;
+/**
+ * This netlib is used in unit tests.
+ */
+public class DummyObjectNetLib extends NetLib<DummyObject> {
 
-public class DummObjectNetLib extends NetLib<DummyObject> {
-
-    public DummObjectNetLib() {
-        super("http://localhost", "v1", Optional.of(8080));
+    public DummyObjectNetLib() {
+        super("http://localhost/", "v1", java.util.Optional.of(80));
     }
 
     @Override
