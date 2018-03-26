@@ -194,6 +194,7 @@ public abstract class NetLib<R> {
         url = realApiUrl + url;
 
         HttpResponse<String> str = Unirest.get(url).asString();
+
         try {
             Object[] array = (Object[]) java.lang.reflect.Array.newInstance(Integer.class, 1);
             Integer[] mcArray = gson.fromJson(str.getBody(), (Type) array.getClass());
