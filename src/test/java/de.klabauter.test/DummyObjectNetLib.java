@@ -13,12 +13,11 @@ public class DummyObjectNetLib extends NetLib<DummyObject> {
 
     @Override
     protected String serviceName() {
-
         return "dummyObject";
     }
 
     @Override
-    protected Class responseClazz()     {
+    protected Class responseClazz() {
         return DummyObject.class;
     }
 }

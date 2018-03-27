@@ -12,6 +12,8 @@
     <description>REST Network Interface</description>
 
     <properties>
+
+        <java.version.target>1.8</java.version.target>
         <!-- Startup class -->
         <application.class>de.klabauter.App</application.class>
     </properties>
@@ -55,10 +57,11 @@
 
         <dependency>
             <groupId>io.specto</groupId>
-            <artifactId>hoverfly-java</artifactId>
+            <artifactId>hoverfly-java-junit5</artifactId>
             <version>0.10.0</version>
             <scope>test</scope>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
@@ -66,7 +69,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
@@ -97,8 +99,8 @@
                 <configuration>
                     <debug>false</debug>
                     <optimize>true</optimize>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version.target}</source>
+                    <target>${java.version.target}</target>
                 </configuration>
             </plugin>
         </plugins>

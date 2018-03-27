@@ -1,3 +1,27 @@
+/*
+    MIT License
+
+    Copyright (c) 2018
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+ */
+
 package de.klabauter.netlib;
 
 import com.google.gson.Gson;
@@ -26,7 +50,6 @@ import java.util.*;
  *
  * @param <R> - Objekttyp, mit dem die Schnittstelle in ihrer Implementierung arbeitet
  */
-
 @Slf4j
 public abstract class NetLib<R> {
 
@@ -118,7 +141,7 @@ public abstract class NetLib<R> {
 
         HttpResponse<String> data = Unirest.get(url).asString();
 
-        // @TODO: Die Logik nochmal nachprüfen
+        // @TODO: Write Test to produce this exception. Maybe this is not needed here.
         if ((data.getBody() == null || data.getBody().isEmpty())
                 || (data.getStatus() != 200)) {
             NetLibException exception = new NetLibException();
@@ -133,10 +156,9 @@ public abstract class NetLib<R> {
             R rdata = (R) gson.fromJson(contents, responseClazz());
             return rdata;
         } catch (JsonSyntaxException exp) {
-            // Microservice hatte Probleme. Wir versuchen es nochmal?
             retryCount++;
             if (retryCount < 4)
-                getDataAsList(url); // Nochmal versuchen
+                getDataAsList(url);
         } catch (Exception exp) {
             log.error(exp.getMessage(), exp);
             setUrlToMicroservice();
@@ -165,16 +187,14 @@ public abstract class NetLib<R> {
             ret.addAll(Arrays.asList(mcArray));
             return ret;
         } catch (JsonSyntaxException exp) {
-            // Microservice hatte Probleme. Wir versuchen es nochmal?
             retryCount++;
             if (retryCount < 4)
-                getDataAsList(url); // Nochmal versuchen
+                getDataAsList(url);
         } catch (Exception exp) {
-            // Microservice ist nicht da?
             NetLibException exp2 = new NetLibException(exp.getMessage());
             exp2.setUrl(url);
             exp2.setErrorCode(str.getStatus());
-            setUrlToMicroservice(); // Erneut Verbindung prüfen
+            setUrlToMicroservice();
             throw exp2;
         }
 
@@ -192,7 +212,6 @@ public abstract class NetLib<R> {
             throws UnirestException, NetLibException {
 
         url = realApiUrl + url;
-
         HttpResponse<String> str = Unirest.get(url).asString();
         try {
             Object[] array = (Object[]) java.lang.reflect.Array.newInstance(Integer.class, 1);
@@ -201,15 +220,14 @@ public abstract class NetLib<R> {
             ret.addAll(Arrays.asList(mcArray));
             return ret;
         } catch (JsonSyntaxException exp) {
-            // Microservice hatte Probleme. Wir versuchen es nochmal?
             retryCount++;
             if (retryCount < 4)
-                getDataAsList(url); // Nochmal versuchen
+                getDataAsList(url);
         } catch (Exception exp) {
             NetLibException exp2 = new NetLibException(exp.getMessage());
             exp2.setUrl(url);
             exp2.setErrorCode(str.getStatus());
-            setUrlToMicroservice(); // Erneut Verbindung prüfen
+            setUrlToMicroservice();
             throw exp2;
         }
         retryCount = 0; // Resetten damit der nächste Call nicht Probleme bekommt;
