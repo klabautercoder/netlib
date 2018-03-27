@@ -4,7 +4,8 @@
     <list default="true" id="26346b0c-05af-4163-9813-699d61279c07" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/klabauter/netlib/NetLib.java" afterPath="$PROJECT_DIR$/src/main/java/de/klabauter/netlib/NetLib.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummObjectNetLib.java" afterPath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java" afterPath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java" afterPath="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/de.klabauter.test/NetlibTest.java" afterPath="$PROJECT_DIR$/src/test/java/de.klabauter.test/NetlibTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NetLib.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NetLib.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/de/klabauter/netlib/NetLib.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="436">
-              <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <caret line="141" column="13" lean-forward="true" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -40,8 +41,8 @@
       <file leaf-file-name="UniRestDataObjectMapper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/UniRestDataObjectMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="14" column="46" lean-forward="true" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -80,8 +81,8 @@
       <file leaf-file-name="NetlibTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/NetlibTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+            <state relative-caret-position="17">
+              <caret line="39" column="24" lean-forward="true" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1176#1177#0" expanded="true" />
@@ -91,18 +92,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DummyObjectNetLib.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DummyObjectNetLib.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="42" lean-forward="true" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+            <state relative-caret-position="187">
+              <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
               <folding>
                 <element signature="e#203#204#0" expanded="true" />
-                <element signature="e#278#279#0" expanded="true" />
-                <element signature="e#330#331#0" expanded="true" />
-                <element signature="e#366#367#0" expanded="true" />
-                <element signature="e#419#420#0" expanded="true" />
-                <element signature="e#459#460#0" expanded="true" />
+                <element signature="e#424#425#0" expanded="true" />
+                <element signature="e#464#465#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,9 +109,11 @@
       <file leaf-file-name="DummyObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-              <folding />
+            <state relative-caret-position="408">
+              <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -150,12 +150,12 @@
         <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummObjectNetLib.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java" />
         <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/UniRestDataObjectMapper.java" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java" />
+        <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java" />
         <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/NetlibTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/klabauter/netlib/NetLib.java" />
-        <option value="$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java" />
       </list>
     </option>
   </component>
@@ -253,7 +253,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="termi&#9;ACTION&#9;ActivateTerminalToolWindow" />
+    <property name="SearchEverywhereHistoryKey" value="term&#9;ACTION&#9;ActivateTerminalToolWindow&#10;termi&#9;ACTION&#9;ActivateTerminalToolWindow" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -402,15 +402,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 12h 06m 41s.xml">
-      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 12h 11m 14s.xml">
-      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 12h 13m 36s.xml">
-      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 12h 54m 16s.xml">
       <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
     </history-entry>
@@ -430,6 +421,15 @@
       <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
     </history-entry>
     <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 13h 02m 12s.xml">
+      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NetlibTest_contextLoads - 2018.03.26 at 13h 09m 03s.xml">
+      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NetlibTest_contextLoads - 2018.03.27 at 08h 23m 00s.xml">
+      <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NetlibTest_contextLoads - 2018.03.27 at 08h 24m 39s.xml">
       <configuration name="NetlibTest.contextLoads" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -627,26 +627,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
+        <state relative-caret-position="187">
+          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+          <folding>
+            <element signature="e#203#204#0" expanded="true" />
+            <element signature="e#424#425#0" expanded="true" />
+            <element signature="e#464#465#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/UniRestDataObjectMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state relative-caret-position="119">
+          <caret line="14" column="46" lean-forward="true" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/NetlibTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        <state relative-caret-position="17">
+          <caret line="39" column="24" lean-forward="true" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1176#1177#0" expanded="true" />
@@ -658,23 +672,8 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/de/klabauter/netlib/NetLib.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <caret line="141" column="13" lean-forward="true" selection-start-line="141" selection-start-column="13" selection-end-line="141" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de.klabauter.test/DummyObjectNetLib.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="42" lean-forward="true" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding>
-            <element signature="e#203#204#0" expanded="true" />
-            <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#366#367#0" expanded="true" />
-            <element signature="e#419#420#0" expanded="true" />
-            <element signature="e#459#460#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

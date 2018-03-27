@@ -37,25 +37,23 @@ class NetlibTest {
     }
 
     // Example of creating Hoverfly Test Services
-    @ClassRule
+    @ClassRule // @TODO still correct in JUnit5?
     public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(
             SimulationSource.dsl(
                 service("localhost")
                     .get("/1")
-                    .willReturn(success(json(new DummyObject())))
+                    .willReturn(success(json(new DummyObject(1))))
                     .post("/")
                     .body(json(new Gson().toJson(new DummyObject())))
                     .willReturn(created("http://www.booking-service.com/api/bookings/1")) // ,
 //                service("www.payment-service.com")
 //                  .get("/api/payments/1")
 //                  .willReturn(success("{\"amount\": \"1.25\"\"}", "application/json"))
-            )
+            ) // @TODO: check if hoverfly is only spring compatible
     );
 
     @Test
     public void contextLoads() throws NetLibException, UnirestException {
-
-
         lib.getIdsFrom("");
         Assertions.assertTrue(1 == 1);
     }
