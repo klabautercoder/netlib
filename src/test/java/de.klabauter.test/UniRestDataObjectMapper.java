@@ -26,7 +26,6 @@ public class UniRestDataObjectMapper implements ObjectMapper {
                 .registerModule(new JavaTimeModule());
     }
 
-
     @Override
     public <T> T readValue(String value, Class<T> valueType) {
         try {

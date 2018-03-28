@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.List;
+
 /**
  * General Tests.
  * <p>
@@ -22,7 +24,6 @@ class NetlibTest {
 
     private Gson gson = new Gson();
 
-
     private DummyObjectNetLib lib = new DummyObjectNetLib();
 
     @BeforeAll
@@ -32,9 +33,8 @@ class NetlibTest {
 
     @Test
     public void contextLoads() throws NetLibException, UnirestException {
-        lib.getIdsFrom(""); // Get Everything
-
-        Assertions.assertTrue(1 == 1);
+        List<Integer> id = lib.getIdsFrom(""); // Get Everything
+        Assertions.assertTrue(id != null);
     }
 
 }

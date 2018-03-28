@@ -8,19 +8,19 @@ import java.util.UUID;
 @Data
 public class DummyObject {
 
+    int     id;
+    String  name;
 
     public DummyObject() {
         Random random = new Random();
-        id = random.nextInt();
-        name = UUID.randomUUID().toString();
+        id      = random.nextInt();
+        name    = UUID.randomUUID().toString();
     }
 
     public DummyObject(int i) {
-        id = i;
-        name = UUID.randomUUID().toString();
+        id      = i;
+        name    = UUID.randomUUID().toString();
     }
 
-    private int id;
 
-    private String name;
 }
