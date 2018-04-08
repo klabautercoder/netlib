@@ -6,20 +6,17 @@
 
     <artifactId>netlib</artifactId>
     <groupId>suppenchef</groupId>
-    <version>2.0</version>
+    <version>1.0</version>
 
     <name>netlib</name>
-    <description>REST Network Interface</description>
+    <description>Network Interface</description>
 
     <properties>
-
         <java.version.target>1.8</java.version.target>
-        <!-- Startup class -->
         <application.class>de.klabauter.App</application.class>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -27,7 +24,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -40,7 +36,6 @@
             <version>1.4.9</version>
         </dependency>
 
-        <!-- Tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -62,8 +57,6 @@
             <scope>test</scope>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -76,12 +69,14 @@
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>

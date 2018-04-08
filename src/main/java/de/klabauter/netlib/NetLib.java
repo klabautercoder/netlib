@@ -97,7 +97,7 @@ public abstract class NetLib<R> {
     }
 
     /**
-     * Die URL entscheiden.
+     * Used to decide which microservice url could be possible.
      */
     private void setUrlToMicroservice() {
         if (isSwarmServiceUrlAccessable()) {
@@ -128,12 +128,12 @@ public abstract class NetLib<R> {
     protected abstract Class responseClazz();
 
     /**
-     * Einfaches holen eines einzigen Datenobjektes
+     * Get one object
      *
-     * @param url - Teilurl zum Element
-     * @return Datenobjekt oder null
-     * @throws UnirestException - Microservice falsch
-     * @throws NetLibException  - Server falsch/weg
+     * @param url - parts of the url
+     * @return Instance of R or null
+     * @throws UnirestException - Microservice wrong
+     * @throws NetLibException  - Server wrong  (?)
      */
     public R getData(String url)
             throws UnirestException, NetLibException {
