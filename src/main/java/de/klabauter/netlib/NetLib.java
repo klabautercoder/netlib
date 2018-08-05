@@ -87,7 +87,7 @@ public abstract class NetLib<R> {
                                 ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Europe/Berlin"));
                                 return zonedDateTime.toLocalDateTime();
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                log.error(e.getMessage(), e);
                                 return null;
                             }
 
@@ -135,7 +135,7 @@ public abstract class NetLib<R> {
      * @throws UnirestException - Microservice wrong
      * @throws NetLibException  - Server wrong  (?)
      */
-    public R getData(String url)
+    public synchronized R getData(String url)
             throws UnirestException, NetLibException {
         url = realApiUrl + url;
 
@@ -174,7 +174,7 @@ public abstract class NetLib<R> {
      * @throws UnirestException - Request Probleme
      * @throws NetLibException  - Alle andere Probleme
      */
-    public List<R> getDataAsList(String url)
+    public synchronized List<R> getDataAsList(String url)
             throws UnirestException, NetLibException {
 
         url = realApiUrl + url;
@@ -208,7 +208,7 @@ public abstract class NetLib<R> {
      * @throws UnirestException - Request Probleme
      * @throws NetLibException  - Alle andere Probleme
      */
-    public List<Integer> getIdsFrom(String url)
+    public synchronized  List<Integer> getIdsFrom(String url)
             throws UnirestException, NetLibException {
 
         url = realApiUrl + url;
