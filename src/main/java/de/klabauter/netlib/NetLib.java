@@ -137,15 +137,16 @@ public abstract class NetLib<R> {
      */
     public synchronized R getData(String url)
             throws UnirestException, NetLibException {
-        url = realApiUrl + url;
 
-        HttpResponse<String> data = Unirest.get(url).asString();
+        String completeUrl = realApiUrl + url;
+
+        HttpResponse<String> data = Unirest.get(completeUrl).asString();
 
         // @TODO: Write Test to produce this exception. Maybe this is not needed here.
         if ((data.getBody() == null || data.getBody().isEmpty())
                 || (data.getStatus() != 200)) {
             NetLibException exception = new NetLibException();
-            exception.setUrl(url);
+            exception.setUrl(completeUrl);
             exception.setErrorCode(data.getStatus());
             setUrlToMicroservice(); // Erneut Verbindung prüfen
             throw exception;
@@ -158,7 +159,7 @@ public abstract class NetLib<R> {
         } catch (JsonSyntaxException exp) {
             retryCount++;
             if (retryCount < 4)
-                getDataAsList(url);
+                getDataAsList(completeUrl);
         } catch (Exception exp) {
             log.error(exp.getMessage(), exp);
             setUrlToMicroservice();
@@ -177,9 +178,9 @@ public abstract class NetLib<R> {
     public synchronized List<R> getDataAsList(String url)
             throws UnirestException, NetLibException {
 
-        url = realApiUrl + url;
+        String completeUrl = realApiUrl + url;
 
-        HttpResponse<String> str = Unirest.get(url).asString();
+        HttpResponse<String> str = Unirest.get(completeUrl).asString();
         try {
             Object[] array = (Object[]) java.lang.reflect.Array.newInstance(responseClazz(), 1);
             R[] mcArray = gson.fromJson(str.getBody(), (Type) array.getClass());
@@ -192,7 +193,7 @@ public abstract class NetLib<R> {
                 getDataAsList(url);
         } catch (Exception exp) {
             NetLibException exp2 = new NetLibException(exp.getMessage());
-            exp2.setUrl(url);
+            exp2.setUrl(completeUrl);
             exp2.setErrorCode(str.getStatus());
             setUrlToMicroservice();
             throw exp2;
@@ -211,8 +212,8 @@ public abstract class NetLib<R> {
     public synchronized  List<Integer> getIdsFrom(String url)
             throws UnirestException, NetLibException {
 
-        url = realApiUrl + url;
-        HttpResponse<String> str = Unirest.get(url).asString();
+        String completeUrl = realApiUrl + url;
+        HttpResponse<String> str = Unirest.get(completeUrl).asString();
         try {
             Object[] array = (Object[]) java.lang.reflect.Array.newInstance(Integer.class, 1);
             Integer[] mcArray = gson.fromJson(str.getBody(), (Type) array.getClass());
@@ -225,7 +226,7 @@ public abstract class NetLib<R> {
                 getDataAsList(url);
         } catch (Exception exp) {
             NetLibException exp2 = new NetLibException(exp.getMessage());
-            exp2.setUrl(url);
+            exp2.setUrl(completeUrl);
             exp2.setErrorCode(str.getStatus());
             setUrlToMicroservice();
             throw exp2;
