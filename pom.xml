@@ -12,7 +12,7 @@
     <description>Network Interface</description>
 
     <properties>
-        <java.version.target>1.8</java.version.target>
+        <java.version.target>11</java.version.target>
         <application.class>de.klabauter.App</application.class>
     </properties>
 
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
+            <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -90,7 +90,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <debug>false</debug>
                     <optimize>true</optimize>
