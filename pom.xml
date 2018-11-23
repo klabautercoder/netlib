@@ -12,7 +12,7 @@
     <description>Network Interface</description>
 
     <properties>
-        <java.version.target>11</java.version.target>
+        <java.version.target>8</java.version.target>
         <application.class>de.klabauter.App</application.class>
     </properties>
 
